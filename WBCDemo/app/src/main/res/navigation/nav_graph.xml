@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/autoLoginFragment">
+    <fragment
+        android:id="@+id/autoLoginFragment"
+        android:name="com.singalarity.wbcdemo.AutoLoginFragment"
+        android:label="fragment_auto_login"
+        tools:layout="@layout/fragment_auto_login" >
+        <action
+            android:id="@+id/action_autoLoginFragment_to_dashBoardFragment"
+            app:destination="@id/dashBoardFragment" />
+        <action
+            android:id="@+id/action_autoLoginFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.singalarity.wbcdemo.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashBoardFragment"
+        android:name="com.singalarity.wbcdemo.DashBoardFragment"
+        android:label="fragment_dash_board"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashBoardFragment_to_autoLoginFragment"
+            app:destination="@id/autoLoginFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.singalarity.wbcdemo.LogInFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_logInFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_dashBoardFragment"
+            app:destination="@id/dashBoardFragment" />
+    </fragment>
+</navigation>
