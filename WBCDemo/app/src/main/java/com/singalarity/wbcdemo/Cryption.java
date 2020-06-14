@@ -28,6 +28,7 @@ public class Cryption {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void WBCInit(String deviceID) {
         Log.d("File Path", String.valueOf(this.context.getFilesDir()));
+
         if (new File(this.context.getFilesDir(), "MobileFile").exists()) {
             Log.d("Check WBC file", "file exist");
             try {
@@ -41,7 +42,10 @@ public class Cryption {
             }
         } else {
             Log.d("Check WBC file", "create new WBC file");
-            String encoded = new RequestAPI().sendDeviceID(deviceID);
+
+            String encoded = new RequestAPI().requestWBCString(deviceID);
+
+
             Log.d("CheckEncoded", "encoded: " + encoded);
             byte[] decodebytes = Base64.getDecoder().decode(encoded);
             try {

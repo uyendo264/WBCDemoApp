@@ -11,7 +11,7 @@ public class RequestObject {
         this.deviceID = deviceID2;
     }
 
-    public JSONObject InitObject() {
+    public JSONObject InitWBCObject() {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("deviceID", this.deviceID);

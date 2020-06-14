@@ -17,16 +17,16 @@ import org.json.JSONObject;
 public class RequestAPI {
     private String url;
 
-    public RequestAPI(String url2) {
-        this.url = url2;
+    public RequestAPI(String url) {
+        this.url = url;
     }
 
     public RequestAPI() {
         this.url = "http://192.168.43.229:8081";
     }
 
-    public String sendDeviceID(String deviceID) {
-        return sendInitRequest(new RequestConstant().initWBCPath, new RequestObject(deviceID).InitObject());
+    public String requestWBCString(String deviceID) {
+        return sendInitRequest(new RequestConstant().initWBCPath, new RequestObject(deviceID).InitWBCObject());
     }
 
     public String sendLoginData(String deviceID, String userInfoEncoded) {

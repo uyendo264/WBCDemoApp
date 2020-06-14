@@ -1,9 +1,12 @@
 package com.singalarity.wbcdemo;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -17,50 +20,37 @@ public class MainActivity extends AppCompatActivity {
     private Cryption wbcCryption;
 
     /* access modifiers changed from: protected */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("MainACTIVITY", "okey");
         this.viewModel = (SharedViewModel) ViewModelProviders.of((FragmentActivity) this).get(SharedViewModel.class);
-        InitApp();
-    }
 
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService("phone");
-        Log.d("Check device ID", "get deviceid");
-        if (ActivityCompat.checkSelfPermission(this, "android.permission.READ_PHONE_STATE") == 0) {
-            this.deviceID = telephonyManager.getDeviceId();
-            InitWBC();
-        }
-    }
-
-    private void InitApp() {
-        if (ActivityCompat.checkSelfPermission(this, "android.permission.READ_PHONE_STATE") == 0) {
-            Log.d("Permission", "granted");
-            Log.d("Check device ID", "get deviceid");
-            this.deviceID = ((TelephonyManager) getSystemService("phone")).getDeviceId();
-            Log.d("Check device ID", "Device ID = " + this.deviceID);
-            InitWBC();
+        requestPermission();
+        if (!requestPermission()){
             return;
         }
-        Log.d("Permission", "not granted");
-        requestPermissions();
+        requestWBC();
     }
 
-    private void InitWBC() {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private Boolean requestPermission() {
+        PhoneStatePermissionRequest phoneStatePermissionRequest = new PhoneStatePermissionRequest(getApplicationContext(),this);
+        if (phoneStatePermissionRequest.getIsPermissionGranted()) {
+            this.deviceID = phoneStatePermissionRequest.getDeviceID();
+            return true;
+        }
+        return false;
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void requestWBC() {
         setContentView((int) R.layout.activity_main);
         Cryption cryption = new Cryption(getApplicationContext());
         this.wbcCryption = cryption;
         cryption.WBCInit(this.deviceID);
         this.viewModel.setWBC(this.wbcCryption);
-    }
-
-    private void requestPermissions() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, "android.permission.READ_PHONE_STATE")) {
-            ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_PHONE_STATE"}, 1);
-            Log.d("Permission", "request permission");
-            return;
-        }
-        ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_PHONE_STATE"}, 1);
     }
 
     public String getDeviceID() {
