@@ -1,0 +1,2 @@
+rootProject.name='WBCDemo'
+include ':app'
