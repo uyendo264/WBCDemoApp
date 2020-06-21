@@ -22,7 +22,7 @@ public class RequestAPI {
     }
 
     public RequestAPI() {
-        this.url = "http://192.168.43.229:8081";
+        this.url = "http://192.168.0.104:8081";
     }
 
     public String requestWBCString(String deviceID) {

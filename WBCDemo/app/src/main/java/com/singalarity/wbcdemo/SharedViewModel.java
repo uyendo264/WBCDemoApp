@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 public class SharedViewModel extends ViewModel {
     private MutableLiveData<Cryption> WBC = new MutableLiveData<>();
-    private MutableLiveData<Boolean> loginStatus = new MutableLiveData<>();
+    private MutableLiveData<Boolean> loginStatus = new MutableLiveData<>(false);
     private MutableLiveData<String> userName = new MutableLiveData<>();
 
     public LiveData<String> getUserName() {

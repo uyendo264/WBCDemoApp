@@ -11,6 +11,7 @@ import android.widget.EditText;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
 import com.singalarity.serverLib.UserInfo;
@@ -32,6 +33,7 @@ public class RegisterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         this.usernameText = (EditText) view.findViewById(R.id.registerUsername_editText);
         final EditText passwordText = (EditText) view.findViewById(R.id.registerPassword_editText);
+        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         view.findViewById(R.id.register_button).setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View view) {
@@ -58,7 +60,7 @@ public class RegisterFragment extends Fragment {
                 Log.d("Login", "response: " + respone);
                 if (respone.equals("200")) {
                     NavHostFragment.findNavController(RegisterFragment.this).navigate((int) R.id.action_registerFragment_to_logInFragment);
-                    RegisterFragment.this.viewModel.setUserName(username);
+                    viewModel.setUserName(username);
                 }
             }
         });
@@ -66,9 +68,7 @@ public class RegisterFragment extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SharedViewModel sharedViewModel = (SharedViewModel) ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
-        this.viewModel = sharedViewModel;
-        sharedViewModel.getUserName().observe(getViewLifecycleOwner(), new Observer<String>() {
+        viewModel.getUserName().observe(getViewLifecycleOwner(), new Observer<String>() {
             public void onChanged(String s) {
                 RegisterFragment.this.usernameText.setText(s);
             }

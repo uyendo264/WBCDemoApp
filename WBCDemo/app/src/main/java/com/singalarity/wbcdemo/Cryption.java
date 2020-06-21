@@ -1,9 +1,11 @@
 package com.singalarity.wbcdemo;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import androidx.annotation.RequiresApi;
 
@@ -21,12 +23,15 @@ public class Cryption {
     private Context context;
     private WBCStringCryption wbcStringEncryption;
 
-    public Cryption(Context context2) {
+    public Cryption(Context context2){
         this.context = context2;
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void WBCInit(String deviceID) {
+        //ProgressDialog progressDialog = new ProgressDialog(context);
+
         Log.d("File Path", String.valueOf(this.context.getFilesDir()));
 
         if (new File(this.context.getFilesDir(), "MobileFile").exists()) {
